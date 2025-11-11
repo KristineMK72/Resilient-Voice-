@@ -1,76 +1,30 @@
-import { useState, useEffect } from 'react';
-
-export default function Home() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        setLoading(true);
-        const res = await fetch('/api/products');  // ✅ FIXED URL
-        const data = await res.json();
-        
-        if (data.error) throw new Error(data.error);
-        setProducts(data.result || []);
-      } catch (err) {
-        setError(err.message);
-        console.error('Fetch Error:', err);
-      } finally {
-        setLoading(false);
-      }
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') { return res.status(200).end(); }
+  if (req.method !== 'GET') { return res.status(405).json({ error: 'Method Not Allowed' }); }
+  if (!process.env.PRINTFUL_API_KEY) { console.error('PRINTFUL_API_KEY is not set in environment variables'); return res.status(500).json({ error: 'Server configuration error: API key missing' }); }
+  try {
+    console.log('Fetching Printful products...');
+    const response = await fetch('https://api.printful.com/store/products', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${process.env.PRINTFUL_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log('Printful API Status:', response.status);
+    if (!response.ok) {
+      const errorBody = await response.text();
+      console.error('Printful Error:', errorBody);
+      throw new Error(`Printful API failed: ${response.status} - ${errorBody}`);
     }
-    fetchProducts();
-  }, []);
-
-  if (loading) return <div>Loading products...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!products.length) return <div>No products found. Add products in Printful dashboard.</div>;
-
-  return (
-    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-      <h1 style={{ textAlign: 'center', color: '#333' }}>
-        ✨ The Resilient Voice Store
-      </h1>
-      <p style={{ textAlign: 'center', color: '#666', fontSize: '1.2em' }}>
-        Faith • Grit • Purpose — Wear Your Message
-      </p>
-      
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginTop: '40px' }}>
-        {products.map((product) => (
-          <div key={product.id} style={{ 
-            border: '1px solid #ddd', 
-            borderRadius: '8px', 
-            padding: '20px', 
-            textAlign: 'center',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-          }}>
-            {product.thumbnail && (
-              <img 
-                src={product.thumbnail} 
-                alt={product.name}
-                style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '4px', marginBottom: '15px' }}
-              />
-            )}
-            <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>{product.name}</h3>
-            <p style={{ color: '#666', margin: '0 0 15px 0' }}>
-              {product.variants?.[0]?.price ? `$${product.variants[0].price}` : 'Price coming soon'}
-            </p>
-            <button style={{
-              background: '#0070f3',
-              color: 'white',
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '6px',
-              fontSize: '16px',
-              cursor: 'pointer'
-            }}>
-              Add to Cart
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+    const data = await response.json();
+    console.log('Products Count:', data.result ? data.result.length : 0);
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('API Route Error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
 }
