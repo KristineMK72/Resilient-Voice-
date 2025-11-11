@@ -9,7 +9,7 @@ export default function Home() {
     async function fetchProducts() {
       try {
         setLoading(true);
-        const res = await fetch('/api/products'); // ✅ Correct URL
+        const res = await fetch('/api/products');
         const data = await res.json();
         if (data.error) throw new Error(data.error);
         setProducts(data.result || []);
@@ -23,9 +23,9 @@ export default function Home() {
     fetchProducts();
   }, []);
 
-  if (loading) return <div>Loading products...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!products.length) return <div>No products found. Add products in Printful dashboard.</div>;
+  if (loading) return <div style={{textAlign:'center',padding:'50px'}}>Loading products...</div>;
+  if (error) return <div style={{textAlign:'center',padding:'50px',color:'red'}}>Error: {error}</div>;
+  if (!products.length) return <div style={{textAlign:'center',padding:'50px'}}>No products found. Add products in Printful dashboard.</div>;
 
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
