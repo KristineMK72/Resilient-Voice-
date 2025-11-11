@@ -1,23 +1,101 @@
 /* General styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f9f9f9;
     color: #333;
 }
 
 header {
-    background-color: #222;
+    background: linear-gradient(135deg, #222, #444);
     color: white;
     text-align: center;
-    padding: 1rem;
+    padding: 2rem 1rem;
 }
 
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+/* Navigation styles */
+nav {
+    background-color: #333;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ffd700; /* Gold accent */
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.8rem;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 30px;
+}
+
+/* Main content layout */
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
+}
+
+.main-content {
+    display: flex;
+    gap: 20px;
+}
+
+.collections-sidebar {
+    width: 50%;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    animation: fadeIn 1s ease-in;
+}
+
+.products-section {
+    width: 50%;
+}
+
+.products-section h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .product-grid {
@@ -32,6 +110,12 @@ header {
     padding: 15px;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .product-card img {
@@ -41,8 +125,14 @@ header {
 }
 
 .product-card h3 {
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.2rem;
     margin: 10px 0;
+}
+
+.product-card p {
+    font-size: 1rem;
+    color: #555;
 }
 
 .product-card select,
@@ -52,6 +142,7 @@ header {
     margin: 5px 0;
     border-radius: 5px;
     border: 1px solid #ccc;
+    font-size: 1rem;
 }
 
 button {
@@ -59,83 +150,38 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #218838;
 }
 
-footer {
+/* Collections sidebar */
+.collections-sidebar h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
     text-align: center;
-    padding: 1rem;
-    background-color: #222;
-    color: white;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-/* Navigation styles */
-nav {
-    background-color: #333;
-    padding: 1rem;
-}
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
-
-nav ul li {
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-}
-
-nav ul li a:hover {
-    color: #28a745;
-}
-
-.hamburger {
-    display: none;
-    font-size: 1.5rem;
-    color: white;
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 20px;
-}
-
-/* Collections section */
-.collections {
-    margin-bottom: 40px;
-}
-
-.collections h2 {
-    text-align: center;
-    font-size: 1.8rem;
     margin-bottom: 20px;
+    color: #222;
 }
 
 .collection-card {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.collection-card:hover {
+    transform: translateY(-5px);
 }
 
 .collection-card h3 {
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #222;
 }
 
 .collection-card p {
@@ -144,10 +190,65 @@ nav ul li a:hover {
     color: #555;
 }
 
+/* Collection-specific styles */
+.resilience {
+    background: linear-gradient(135deg, #ffd70010, #fff);
+    border-left: 4px solid #ffd700; /* Gold */
+}
+
+.grace {
+    background: linear-gradient(135deg, #87ceeb10, #fff);
+    border-left: 4px solid #87ceeb; /* Sky blue */
+}
+
+.warrior {
+    background: linear-gradient(135deg, #ff450010, #fff);
+    border-left: 4px solid #ff4500; /* Orange-red */
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #222, #444);
+    color: white;
+    font-size: 1.1rem;
+}
+
+footer p:first-child {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 /* Responsive design */
+@media (max-width: 900px) {
+    .main-content {
+        flex-direction: column;
+    }
+
+    .collections-sidebar,
+    .products-section {
+        width: 100%;
+    }
+
+    .collections-sidebar {
+        position: relative;
+    }
+}
+
 @media (max-width: 600px) {
-    .product-grid {
-        grid-template-columns: 1fr;
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    header p {
+        font-size: 1rem;
     }
 
     .hamburger {
@@ -168,7 +269,11 @@ nav ul li a:hover {
         margin: 10px 0;
     }
 
-    .collections h2 {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .collections-sidebar h2 {
         font-size: 1.5rem;
     }
 
