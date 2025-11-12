@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -9,7 +10,7 @@ export default function Home() {
     async function fetchProducts() {
       try {
         setLoading(true);
-        const res = await fetch('/api/products'); // ✅ FIXED: Relative path - no CORS
+        const res = await fetch('/api/products');
         const data = await res.json();
         if (data.error) throw new Error(data.error);
         setProducts(data.result || []);
@@ -38,12 +39,12 @@ export default function Home() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginTop: '40px' }}>
         {products.map((product) => (
           <div key={product.id} style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '20px', textAlign: 'center', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-            {product.thumbnail && (
-              <img src={product.thumbnail} alt={product.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '4px', marginBottom: '15px' }} />
+            {product.thumbnail_url && (
+              <img src={product.thumbnail_url} alt={product.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '4px', marginBottom: '15px' }} />
             )}
             <h3 style={{ margin: '0 0 10px 0', color: '#333' }}>{product.name}</h3>
             <p style={{ color: '#666', margin: '0 0 15px 0' }}>
-              {product.variants?.[0]?.price ? `$${product.variants[0].price}` : 'Price coming soon'}
+              Variants: {product.variants} | Price: TBD (Check product page)
             </p>
             <button style={{ background: '#0070f3', color: 'white', border: 'none', padding: '12px 24px', borderRadius: '6px', fontSize: '16px', cursor: 'pointer' }}>
               Add to Cart
@@ -52,6 +53,11 @@ export default function Home() {
         ))}
       </div>
       <p style={{ textAlign: 'center', marginTop: '40px', color: '#666' }}>Every purchase supports Central MN nonprofits through The Resilient Voice mission.</p>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <Link href="/products">
+          <a style={{ display: 'inline-block', padding: '12px 24px', background: '#0070f3', color: '#fff', textDecoration: 'none', borderRadius: '6px' }}>Shop All Products</a>
+        </Link>
+      </div>
     </div>
   );
 }
