@@ -3,104 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Resilient Voice Store</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>The Resilient Voice - All Collections</title>
 </head>
 <body>
     <header>
-        <h1 class="logo">✨ The Resilient Voice</h1>
-        <p class="tagline">Faith • Grit • Purpose — Wear Your Message</p>
+        <h1>The Resilient Voice</h1>
+        <p>Faith • Grit • Purpose — Wear Your Message</p>
         <nav>
-            <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-            <ul id="nav-menu">
-                <li><a href="#" onclick="filterProducts('all')">All</a></li>
-                <li><a href="#" onclick="filterProducts('resilience')">Resilience</a></li>
-                <li><a href="#" onclick="filterProducts('grace')">Grace</a></li>
-                <li><a href="#" onclick="filterProducts('warrior')">Warrior Spirit Co.</a></li>
-                <li><a href="blog.html">Blog</a></li>
-            </ul>
+            <a href="index.html">All</a> |
+            <a href="resilience.html">Resilience</a> |
+            <a href="grace.html">Grace</a> |
+            <a href="warrior_spirit_co.html">Warrior Spirit Co.</a> |
+            <a href="blog.html">Blog</a> |
+            <a href="accessories_and_more.html">Accessories & More</a>
         </nav>
     </header>
-
-    <main class="container">
-        <aside class="collections-sidebar">
-            <h2>Our Collections</h2>
-            <div class="collection-card resilience">
-                <h3>Resilience</h3>
-                <p>Rooted in Scripture’s strength, these designs—Strength, Steadfast, and Fortitude—stand for faith through adversity.</p>
-            </div>
-            <div class="collection-card grace">
-                <h3>Grace</h3>
-                <p>Soft colors, peaceful messages. Every piece radiates comfort, joy, and unmerited love.</p>
-            </div>
-            <div class="collection-card warrior">
-                <h3>Warrior Spirit Co.</h3>
-                <p>Engineered for performance and purpose. Designed for those who train with conviction and live with courage.</p>
-            </div>
-        </aside>
-
-        <section class="products-section">
-            <h2>Shop Our Products</h2>
-            <div class="product-grid" id="product-grid">
-                <!-- Products will load here -->
-            </div>
-        </section>
+    <main>
+        <h2>Our Collections</h2>
+        <ul>
+            <li><a href="resilience.html">Resilience</a> - Rooted in Scripture's strength, these designs—Strength, Steadfast, and Fortitude—stand for faith through adversity.</li>
+            <li><a href="grace.html">Grace</a> - [Add description]</li>
+            <li><a href="warrior_spirit_co.html">Warrior Spirit Co.</a> - [Add description]</li>
+        </ul>
+        <p><a href="blog.html">Visit our Blog</a> for inspiration and updates.</p>
+        <p><a href="accessories_and_more.html">Check out Accessories & More</a> for additional faith-inspired items.</p>
     </main>
-
-    <footer>
-        <p>Every purchase supports Central MN nonprofits through The Resilient Voice mission.</p>
-        <p>&copy; 2025 The Resilient Voice. All rights reserved.</p>
-    </footer>
-
-    <script>
-        // Toggle mobile menu
-        function toggleMenu() {
-            document.getElementById('nav-menu').classList.toggle('active');
-        }
-
-        // Fetch products from your Vercel backend
-        async function loadProducts(category = 'all') {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = '<p>Loading products...</p>';
-
-            try {
-                const response = await fetch('https://YOUR-VERCEL-APP.vercel.app/api/products');
-                const data = await response.json();
-
-                if (!data.result) {
-                    grid.innerHTML = '<p>No products found.</p>';
-                    return;
-                }
-
-                // Printful products are inside data.result
-                const products = data.result.filter(p => category === 'all' || p.name.toLowerCase().includes(category));
-
-                grid.innerHTML = '';
-                products.forEach(product => {
-                    const image = product.thumbnail_url || 'https://via.placeholder.com/300x300?text=Product';
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-                    card.innerHTML = `
-                        <img src="${image}" alt="${product.name}">
-                        <h3>${product.name}</h3>
-                        <p>${product.sync_product.name || ''}</p>
-                        <button onclick="window.open('${product.external_url || '#'}', '_blank')">View</button>
-                    `;
-                    grid.appendChild(card);
-                });
-            } catch (err) {
-                console.error('Error fetching products:', err);
-                grid.innerHTML = '<p>Error loading products. Please try again later.</p>';
-            }
-        }
-
-        function filterProducts(category) {
-            loadProducts(category);
-        }
-
-        // Load products initially
-        loadProducts();
-    </script>
 </body>
 </html>
