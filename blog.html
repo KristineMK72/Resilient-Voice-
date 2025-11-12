@@ -3,47 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog | Kristine’s Shop</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Through the Storms: Grace, Purpose, and Giving Back | The Resilient Voice</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      line-height: 1.7;
+      color: #333;
+      background-color: #fafafa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      text-align: center;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #444;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #0077cc;
+    }
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #222;
+    }
+    .banner {
+      background-color: #ffcc00;
+      text-align: center;
+      padding: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a class="active" href="blog.html">Blog</a></li>
-    </ul>
-  </nav>
+  <header>
+    <h1>The Resilient Voice</h1>
+    <p>Faith • Grit • Purpose — Wear Your Message</p>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="resilience.html">Resilience</a> |
+      <a href="grace.html">Grace</a> |
+      <a href="warrior_spirit_co.html">Warrior Spirit Co.</a> |
+      <a href="blog.html">Blog</a> |
+      <a href="accessories_and_more.html">Accessories & More</a>
+    </nav>
+  </header>
+
+  <div class="banner">
+    🌟 Opening soon! Check our blog for specials and the non-profits we support 🌟
+  </div>
 
   <main>
-    <h1>Featured Products & Posts</h1>
-    <div id="products" class="product-grid">Loading products...</div>
+    <h1>Through the Storms: How God’s Grace Shaped My Mission</h1>
+    <p>
+      Life has a way of testing our strength, humbling our pride, and breaking us open just enough for light to get in. 
+      Through every storm I’ve faced—heartache, loss, uncertainty, and the quiet battles no one sees—God’s grace has been the anchor that held me steady. 
+      <strong>The Resilient Voice</strong> was born from that place of redemption, a reminder that even in the fiercest storms, grace prevails.
+    </p>
+
+    <p>
+      This isn’t just an apparel line—it’s my ministry in motion. Each shirt, hoodie, and design carries a message of faith, resilience, and purpose. 
+      I wanted to create something that speaks to those who are struggling, something that says, “You’re not alone. You have strength. You are seen.”
+    </p>
+
+    <p>
+      My goal has always been to turn pain into purpose, to take what once broke me and use it to bring hope to others. 
+      That’s why <strong>10% of all proceeds</strong> go directly to nonprofits that make a real difference—organizations that stand in the gap for people who are hurting:
+    </p>
+
+    <ul>
+      <li>🕊️ Suicide prevention and awareness programs</li>
+      <li>💬 Anti-bullying initiatives</li>
+      <li>💚 Mental health support networks</li>
+      <li>🏠 Homelessness relief organizations</li>
+    </ul>
+
+    <p>
+      These causes are close to my heart because I’ve seen firsthand how easily people can lose hope—and how a single act of kindness, a simple message, or a helping hand can change everything. 
+      Every purchase you make helps share that message. Every shirt worn is a seed of encouragement planted in the world.
+    </p>
+
+    <p>
+      As I continue to grow <strong>The Resilient Voice</strong>, I pray it becomes more than a brand—something that connects us all through faith, compassion, and courage. 
+      When you wear these words, you’re not just wearing apparel. You’re wearing your testimony, your resilience, and your calling.
+    </p>
+
+    <p>
+      Thank you for being a part of this journey. Thank you for believing that grace wins, that faith restores, and that purpose can rise from pain.
+    </p>
+
+    <p style="text-align:center; font-weight:bold; margin-top: 40px;">
+      🌿 <em>With love and faith,</em><br>
+      Kristine – Founder of The Resilient Voice
+    </p>
   </main>
-
-  <script>
-    async function loadProducts() {
-      try {
-        const response = await fetch("https://your-vercel-project.vercel.app/api/products");
-        const data = await response.json();
-        const container = document.getElementById("products");
-
-        if (!data.result || !data.result.length) {
-          container.innerHTML = "<p>No products found.</p>";
-          return;
-        }
-
-        container.innerHTML = data.result.map(p => `
-          <div class="product-card">
-            <img src="${p.sync_product.thumbnail_url}" alt="${p.sync_product.name}">
-            <h3>${p.sync_product.name}</h3>
-            <a href="${p.sync_product.external_id}" target="_blank">View</a>
-          </div>
-        `).join("");
-      } catch (err) {
-        document.getElementById("products").innerHTML = "<p>Error loading products.</p>";
-        console.error(err);
-      }
-    }
-    loadProducts();
-  </script>
 </body>
 </html>
